@@ -86,10 +86,13 @@ class UserDAOTest
         String username = users.get(0).getUsername();
         String password = "Password123"; //password has to be plain text to be tested
 
+        // verifies that user exists and password is correct, creates a new user DTO if successful
         UserDTO userDTO = userDAO.getVerifiedUser(username, password);
 
+        // asserts that the DTO was created (not null)
         assertNotNull(userDTO);
 
+        // asserts that the DTO has the same username as the one from the list
         assertEquals(userDTO.getUsername(), username);
     }
 
