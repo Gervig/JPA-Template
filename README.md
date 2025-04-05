@@ -1,5 +1,5 @@
 # JPA Template
-This is a template for creating REST APIs using JPA and Hibernate
+This is a template for creating REST APIs using Java, JPA, Lombok, Javalin and Hibernate.
 
 # Endpoint Table
 
