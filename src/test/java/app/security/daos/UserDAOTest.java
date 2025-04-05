@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDAOTest
+class UserDAOTest // only works one by one, due to IDs being Strings
 {
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
     private static final UserDAO userDAO = UserDAO.getInstance(emf);
