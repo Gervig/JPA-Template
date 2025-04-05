@@ -129,14 +129,14 @@ public class UserDAO
         }
     }
 
-    public void delete(Integer id)
+    public void delete(String name)
     {
         try (EntityManager em = emf.createEntityManager())
         {
             try
             {
                 em.getTransaction().begin();
-                User user = em.find(User.class, id);
+                User user = em.find(User.class, name);
                 if (user == null)
                 {
                     em.getTransaction().rollback();

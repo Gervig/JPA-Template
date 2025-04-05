@@ -9,6 +9,7 @@ import app.security.entities.User;
 import dk.bugelhartmann.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,14 +32,25 @@ class UserDAOTest
         {
             em.getTransaction().begin();
 
-            // clears previous data
-            em.createQuery("DELETE FROM User").executeUpdate();
-            em.createQuery("DELETE FROM Role ").executeUpdate();
-
             // persists all users in the list
             users.forEach(userDAO::create);
             // persists all the roles in the list
             roles.forEach(roleDAO::createRole);
+            em.getTransaction().commit();
+        }
+    }
+
+    @AfterEach
+    void teardown()
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            em.getTransaction().begin();
+
+            // clears previous data
+            em.createQuery("DELETE FROM User").executeUpdate();
+            em.createQuery("DELETE FROM Role").executeUpdate();
+            em.getTransaction().commit();
         }
     }
 
@@ -62,13 +74,10 @@ class UserDAOTest
     @Test
     void read()
     {
-        String username = "Test123";
-        User expected = new User(username, "PasswordTest123");
-        userDAO.create(expected);
+        String expected = users.get(0).getUsername();
+        String actual = userDAO.read(expected).getUsername();
 
-        User actual = userDAO.read(username);
-
-        assertEquals(expected.getUsername(), actual.getUsername());
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -107,5 +116,20 @@ class UserDAOTest
     @Test
     void delete()
     {
+        // reads all users
+        List<User> userListBefore = userDAO.readAll();
+
+        // asserts that the size is 2
+        assertEquals(userListBefore.size(), 2);
+
+        // finds a username and deletes it
+        String username = users.get(0).getUsername();
+
+        userDAO.delete(username);
+
+        // asserts that the list has one less user
+        List<User> userListAfter = userDAO.readAll();
+
+        assertEquals(userListAfter.size(), 1);
     }
 }
