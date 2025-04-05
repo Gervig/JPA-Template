@@ -34,3 +34,4 @@ src/main/resources/config.properties
 .idea/template-meta.xml
 .idea/uiDesigner.xml
 .idea/vcs.xml
+/target/
