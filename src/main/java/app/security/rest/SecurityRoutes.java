@@ -15,15 +15,12 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class SecurityRoutes
 {
-    // declare controllers here
     private static SecurityController securityController = new SecurityController();
     private static ObjectMapper objectMapper = new ObjectMapper();
     private static Logger logger = LoggerFactory.getLogger(SecurityRoutes.class);
 
     public static EndpointGroup getRoutes(EntityManagerFactory emf)
     {
-        // instantiate controllers with emf here
-
         return () ->
         {
             path("auth", () ->
