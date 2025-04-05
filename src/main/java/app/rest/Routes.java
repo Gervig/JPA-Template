@@ -1,6 +1,7 @@
 package app.rest;
 
 import app.dtos.ErrorMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ public class Routes
 {
     // declare static controllers here
     private static Logger logger = LoggerFactory.getLogger(Routes.class);
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
     public static EndpointGroup getRoutes(EntityManagerFactory emf)
     {
